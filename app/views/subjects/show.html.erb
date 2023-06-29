@@ -1,0 +1,212 @@
+<h4 class="my-2 mx-2"><i class="fa-solid fa-flask"></i> <%= @subject.title %></h4>
+
+  <div class="accordion mt-3" id="accordion-professors">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="professorsHeader">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#professorsCollapse" aria-expanded="false" aria-controls="professorsCollapse">
+          <h5><i class="fa-solid fa-graduation-cap"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Διδάσκοντες" : "Professors"%> (<%= @subject.professors.size %>)</h5>
+        </button>
+      </h2>
+      <div id="professorsCollapse" class="accordion-collapse collapse show" aria-labelledby="professorsHeader" data-bs-parent="#accordion-professors">
+        <div class="accordion-body">
+          <table class="table table-striped">
+            <thead class="table-secondary">
+              <tr>
+                <th></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ημερομηνία Εγγραφής" : "Attended At"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @subject.professors.each do |professor| %>
+                <tr>
+                    <td><% if professor.avatar.attached? %>
+                          <%= image_tag professor.avatar, style: "width: 35px; height: 35px; object-fit: cover;", class: "rounded"%>
+                        <% else %>
+                          <i class="fa-regular fa-user text-align-center" style="font-size: 20px;"></i>
+                        <% end %>
+                    </td>
+                    <td><%= professor.full_name %></td>
+                    <td><%= professor.subject_attends.find_by(subject_id: @subject.id).created_at.to_date %></td>
+                    <td class="d-flex">
+                      <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#professorsModal-#{professor.id}"%>">
+                        <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
+                      </button>
+                    <% if @current_user.role == "Admin" or (@current_user.role == "Professor" and @current_user == professor)%>
+                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Απεγγραφή" : "Resign", professor.subject_attends.find_by(subject_id: @subject.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %></td>
+                    <% end %>
+                </tr>
+                <!-- professor_Modal -->
+                <div class="modal fade" id="<%="professorsModal-#{professor.id}"%>" tabindex="-1" aria-labelledby="<%="professorsModalLabel-#{professor.id}"%>" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="<%="professorsModalLabel-#{professor.id}"%>"><%=professor.full_name%></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <% if professor.avatar.attached? %>
+                            <%= image_tag professor.avatar, class:"card-img-top" %>
+                        <% else %>
+                          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top" alt="">
+                        <% end %>
+                        <h6 class="mt-2"><strong>Email:</strong> <%= professor.email %></h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion mt-3" id="accordion-content">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="contentHeader">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contentCollapse" aria-expanded="false" aria-controls="contentCollapse">
+          <h5><i class="fa-solid fa-paperclip"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Υλικό" : "Content"%> (<%= @subject.contents.size %>)</h5>
+        </button>
+      </h2>
+      <div id="contentCollapse" class="accordion-collapse collapse show" aria-labelledby="contentHeader" data-bs-parent="#accordion-content">
+        <div class="accordion-body">
+          <% if (@current_user.role == "Professor" and not @current_user.subject_attends.find_by(subject_id: @subject.id).nil?) %>
+            <a class="btn btn-outline-dark mb-2" href="<%= new_content_path(subject_id: @subject.id) %>"><i class="fa-solid fa-plus"></i> Υλικό</a>
+          <% end %>
+          <table class="table table-striped">
+            <thead class="table-secondary">
+              <tr>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Τίτλος" : "Title"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή" : "Description"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Τύπος" : "Type"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ημερομηνία" : "Created at"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @subject.contents.each do |content| %>
+                <tr>
+                    <td><%= content.title %></td>
+                    <td><%= content.description %></td>
+                    <td><%= content.category %></td>
+                    <td><%= content.created_at.to_date %></td>
+                    <td class="d-flex">
+                      <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#contentModal-#{content.id}"%>">
+                        <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
+                      </button>
+                    <% if @current_user.role == "Admin" or (@current_user.role == "Professor" and not @current_user.subject_attends.find_by(subject_id: @subject.id).nil?)%>
+                        <a class="btn btn-outline-dark mx-1" href="<%= edit_content_path(content, subject_id: content.subject_id )%>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
+                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", content, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %></td>
+                    <% end %>
+                </tr>
+                <!-- Content_Modal -->
+                <div class="modal fade" id="<%="contentModal-#{content.id}"%>" tabindex="-1" aria-labelledby="<%="contentModalLabel-#{content.id}"%>" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="<%="contentModalLabel-#{content.id}"%>"><%= content.title %></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <h6 class="mt-2"><strong> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή" : "Description"%>:</strong> <%= content.description %></h6>
+                        <% if content.category == 'Link'%>
+                          <h6 class="mt-2"><strong>Link:</strong> <a href="<%= content.url %>" target="_blank"><%= content.url %></a></h6>
+                        <% elsif content.category == 'Image'%>
+                          <% if content.file.attached? %>
+                            <%= image_tag content.file, class:"card-img-top" %>
+                            <h6 class="mt-2"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε την εικόνα" : "Download the image"%>: </strong></h6>
+                            <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
+                          <% else %>
+                            <img src="https://i1.wp.com/www.slntechnologies.com/wp-content/uploads/2017/08/ef3-placeholder-image.jpg" class="card-img-top" alt="">
+                          <% end %>
+                        <% elsif content.category == 'File'%>
+                          <% if content.file.attached? %>
+                            <h6 class="mt-2"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε το παρακάτω αρχείο" : "Download file"%>:</strong></h6>
+                            <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
+                          <% else %>
+                            <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Δεν βρέθηκε αρχείο. Παρακαλώ επεξεργαστείτε το υλικό." : "Nothing found, please edit this content."%>
+                          <% end %>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion mt-3" id="accordion-students">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="studentsHeader">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#studentsCollapse" aria-expanded="false" aria-controls="studentsCollapse">
+          <h5><i class="fa-solid fa-graduation-cap"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Φοιτητές" : "Students"%> (<%= @subject.students.size %>)</h5>
+        </button>
+      </h2>
+      <div id="studentsCollapse" class="accordion-collapse collapse show" aria-labelledby="studentsHeader" data-bs-parent="#accordion-students">
+        <div class="accordion-body">
+          <table class="table table-striped">
+            <thead class="table-secondary">
+              <tr>
+                <th></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full name"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ημερομηνία Εγγραφής" : "Attended At"%></th>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% @subject.students.each do |student| %>
+                <tr>
+                    <td><% if student.avatar.attached? %>
+                          <%= image_tag student.avatar, style: "width: 35px; height: 35px; object-fit: cover;", class: "rounded"%>
+                        <% else %>
+                          <i class="fa-regular fa-user text-align-center" style="font-size: 20px;"></i>
+                        <% end %>
+                    </td>
+                    <td><%= student.full_name %></td>
+                    <td><%= student.subject_attends.find_by(subject_id: @subject.id).created_at.to_date %></td>
+                    <td class="d-flex">
+                      <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#studentsModal-#{student.id}"%>">
+                        <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
+                      </button>
+                    <% if @current_user.role == "Admin" or (@current_user.role == "Professor" and not @current_user.subject_attends.find_by(subject_id: @subject.id).nil?) or (@current_user.role == "Student" and @current_user == student)%>
+                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Απεγγραφή" : "Resign", student.subject_attends.find_by(subject_id: @subject.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %></td>
+                    <% end %>
+                </tr>
+                <!-- Student_Modal -->
+                <div class="modal fade" id="<%="studentsModal-#{student.id}"%>" tabindex="-1" aria-labelledby="<%="studentsModalLabel-#{student.id}"%>" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="<%="studentsModalLabel-#{student.id}"%>"><%=student.full_name%></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <% if student.avatar.attached? %>
+                            <%= image_tag student.avatar, class:"card-img-top" %>
+                        <% else %>
+                          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top" alt="">
+                        <% end %>
+                        <h6 class="mt-2"><strong>Email:</strong> <%= student.email %></h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<a class="btn btn-outline-dark mx-1 mt-4" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i></i> Πίσω</a>

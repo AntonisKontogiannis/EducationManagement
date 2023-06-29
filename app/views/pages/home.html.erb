@@ -1,0 +1,37 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2 class="my-2 mx-2"><i class="fa-solid fa-house"></i> Τα Μαθήματά μου</h2>
+<% else %>
+    <h2 class="mt-2"><i class="fa-solid fa-house"></i> My Subjects</h2>
+<% end %>
+
+<table class="table table-striped mt-3">
+    <thead class="table-secondary">
+        <tr>
+        <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject"%></th>
+        <% if @current_user.role == "Student" %>
+            <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Διδάσκων" : "Professor"%></th>
+        <% else %>
+            <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Φοιτητές" : "Students"%></th>
+        <% end %>
+        <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @current_user.subjects.each do |subject| %>
+        <tr>
+            <td><%= subject.title %></td>
+            <% if @current_user.role == "Student" %>
+                <td><%= subject.professors.map {|u| u.full_name}.join %></td>
+            <% else %>
+                <td><%= subject.students_size %></td>
+            <% end %>
+            <td class="d-flex"><a class="btn btn-outline-dark mx-1" href="<%= subject_path(subject) %>"><i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%></a>
+            <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Αποχώρηση' : "Resign", subject_attend_path(SubjectAttend.find_by(subject_id: subject.id, user_id: @current_user.id)), method: :delete, class: 'btn btn-outline-warning' %>
+            <% if @current_user.role == "Professor" %>
+                <a class="btn btn-outline-dark mx-1" href="<%= edit_subject_path(subject) %>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
+            <% end %>
+        </tr>
+        <% end %>
+    </tbody>
+</table>

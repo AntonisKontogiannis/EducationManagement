@@ -1,0 +1,9 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2><i class="fa-solid fa-gear"></i>Προσωπικές Ρυθμίσεις</h2>
+<% else %>
+    <h2><i class="fa-solid fa-gear"></i>Personal Settings</h2>
+<% end %>
+
+<%= render 'form', user: @user %>
+
+<a class="btn btn-outline-dark ml-2" href="<%= subjects_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>

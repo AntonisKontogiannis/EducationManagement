@@ -1,0 +1,7 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2 class="mx-2 my-2"><i class="fa-solid fa-screwdriver-wrench"></i> Επεξεργασία μαθήματος <%= @subject.title %></h2>
+<% else %>
+    <h2 class="text-center mt-4"><i class="fa-solid fa-screwdriver-wrench"></i> <%= @subject.title %> Edit</h2>
+<% end %>
+
+<%= render 'form', subject: @subject %>

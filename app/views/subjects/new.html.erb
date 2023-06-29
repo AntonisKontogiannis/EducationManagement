@@ -1,0 +1,8 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2 class="mx-2 my-2">Νέο Μάθημα</h2>
+<% else %>
+   <h2 class="mx-2 my-2">New Subject</h2>
+<% end %>
+
+
+<%= render 'form', subject: @subject %>

@@ -1,0 +1,183 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2 class="mt-2"><i class="fa-solid fa-sliders"></i> Πίνακας Ελέγχου</h2>
+<% else %>
+    <h2 class="mt-2"><i class="fa-solid fa-sliders"></i> Admin's Control Panel</h2>
+<% end %>
+
+
+<div class="accordion mt-3" id="accordionControlPanel">
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="semestersHeader">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#semestersCollapse" aria-expanded="false" aria-controls="semestersCollapse">
+        <h4><i class="fa-solid fa-layer-group"></i> <%= (session[:lang].nil? or session[:lang] == 'gr')?  "Εξάμηνα" : "Semesters" %> (<%= @semesters.size %>)</h4>
+      </button>
+    </h2>
+    <div id="semestersCollapse" class="accordion-collapse collapse" aria-labelledby="semestersHeader" data-bs-parent="#accordionControlPanel">
+      <div class="accordion-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "A/A" : "No"%></th>
+                <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Εξάμηνο" : "Semester"%></th>
+                <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Αριθμός Μαθημάτων" : "Subjects"%></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @semesters.each do |semester| %>
+                    <tr>
+                        <th scope="row"><%= semester.id %></th>
+                        <td><%= (session[:lang].nil? or session[:lang] == 'gr') ? semester.gr_title : semester.en_title %></td>
+                        <td><%= semester.subjects.size %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="subjectsHeader">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subjectsCollapase" aria-expanded="false" aria-controls="subjectsCollapase">
+        <h4><i class="fa-solid fa-book"></i> <%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μαθήματα" : "Subjects" %> (<%= @subjects.size %>)</h4>
+      </button>
+    </h2>
+    <div id="subjectsCollapase" class="accordion-collapse collapse show" aria-labelledby="subjectsHeader" data-bs-parent="#accordionControlPanel">
+      <div class="accordion-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject" %></th>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Εξάμηνο" : "Semester" %></th>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Συμμετέχοντες" : "Participants" %></th>
+                <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @subjects.each do |subject| %>
+                    <tr>
+                        <td><%= subject.title %></td>
+                        <td><%= (session[:lang].nil? or session[:lang] == 'gr') ? subject.semester.gr_title : subject.semester.en_title %></td>
+                        <td><%= subject.subject_attends.size %></td>
+                        <td>
+                            <a class="btn btn-outline-dark" href="<%= edit_subject_path(subject) %>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
+                            <a class="btn btn-outline-dark" href="<%= subject_path(subject) %>"><i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%></a>
+                            <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", subject_path(subject), method: :delete, class: 'btn btn-outline-danger my-2 mx-4' %>
+                        </td>
+                    </tr>
+                <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="studentsHeader">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#subjectsCollapse" aria-expanded="false" aria-controls="subjectsCollapse">
+        <h4><i class="fa-solid fa-graduation-cap"></i> <%= (session[:lang].nil? or session[:lang] == 'gr')?  "Φοιτητές" : "Students" %> (<%= @students.size %>)</h4>
+      </button>
+    </h2>
+    <div id="subjectsCollapse" class="accordion-collapse collapse" aria-labelledby="studentsHeader" data-bs-parent="#accordionControlPanel">
+      <div class="accordion-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name" %></th>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μαθήματα" : "Subjects" %></th>
+                <th scope="col">Email</th>
+                <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @students.each do |student| %>
+                    <tr>
+                        <td><%= student.full_name %></td>
+                        <td><%= student.subject_attends.size %></td>
+                        <td><%= student.email %></td>
+                        <td>
+                          <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#studentsModal-#{student.id}"%>">
+                            <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
+                          </button>
+                          <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", user_path(student), method: :delete, class: 'btn btn-outline-danger my-2 mx-4' %>
+                        </td>
+                    </tr>
+                    <!-- Student_Modal -->
+                      <div class="modal fade" id="<%="studentsModal-#{student.id}"%>" tabindex="-1" aria-labelledby="<%="studentsModalLabel-#{student.id}"%>" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="<%="studentsModalLabel-#{student.id}"%>"><%=student.full_name%></h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <% if student.avatar.attached? %>
+                                  <%= image_tag student.avatar, class:"card-img-top" %>
+                              <% else %>
+                                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top" alt="">
+                              <% end %>
+                              <h6 class="mt-2"><strong>Email:</strong> <%= student.email %></h6>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header" id="professorsHeader">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#professorsCollapse" aria-expanded="false" aria-controls="professorsCollapse">
+        <h4><i class="fa-solid fa-chalkboard-user"></i> <%= (session[:lang].nil? or session[:lang] == 'gr')?  "Καθηγητές" : "Professors" %> (<%= @professors.size %>)</h4>
+      </button>
+    </h2>
+    <div id="professorsCollapse" class="accordion-collapse collapse" aria-labelledby="professorsHeader" data-bs-parent="#accordionControlPanel">
+      <div class="accordion-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name" %></th>
+                <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μαθήματα" : "Subjects" %></th>
+                <th scope="col">email</th>
+                <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+                </tr>
+            </thead>
+            <tbody>
+                <% @professors.each do |professor| %>
+                    <tr>
+                        <td><%= professor.full_name %></td>
+                        <td><%= professor.subject_attends.size %></td>
+                        <td><%= professor.email %></td>
+                        <td>
+                          <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#professorsModal-#{professor.id}"%>">
+                            <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
+                          </button>
+                          <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", user_path(professor), method: :delete, class: 'btn btn-outline-danger my-2 mx-4' %>
+                        </td>
+                    </tr>
+                    <!-- professor_Modal -->
+                    <div class="modal fade" id="<%="professorsModal-#{professor.id}"%>" tabindex="-1" aria-labelledby="<%="professorsModalLabel-#{professor.id}"%>" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="<%="professorsModalLabel-#{professor.id}"%>"><%=professor.full_name%></h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            <% if professor.avatar.attached? %>
+                                <%= image_tag professor.avatar, class:"card-img-top" %>
+                            <% else %>
+                              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top" alt="">
+                            <% end %>
+                            <h6 class="mt-2"><strong>Email:</strong> <%= professor.email %></h6>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                <% end %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

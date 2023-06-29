@@ -1,0 +1,30 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2 class="text-center mt-4">Δημιουργία Εξαμήνου</h2>
+<% else %>
+    <h2 class="text-center mt-4">Create Semester</h2>
+<% end %>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-10">
+            <%= form_with(scope: :semester, url: semesters_path, class: "shadow p-3 mb-3 bg-dark", local: true) do |f|%>
+                <div class="form-group row mt-2">
+                    <%= f.label :gr_title, class: "col-2 col-form-label text-light", value: "Τίτλος στα ελληνικά" %>
+                    <div class="col-10">
+                        <%= f.text_field :gr_title, class: "form-control shadow rounded", placeholder: "Όνομα εξαμήνου" %>
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <%= f.label :en_title, class: "col-2 col-form-label text-light", value: "Title in English" %>
+                    <div class="col-10">
+                        <%= f.text_field :en_title, class: "form-control shadow rounded", placeholder: "Semester's title" %>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between mt-3">
+                    <%= f.submit (session[:lang].nil? or session[:lang] == 'gr')?  'Δημιουργία' : "Create Semester" , class: "btn btn-outline-light" %>
+                    <a class="btn btn-outline-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
+                </div>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>  

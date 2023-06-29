@@ -1,0 +1,8 @@
+<div id="page-content">
+    <% if (session[:lang].nil? or session[:lang] == 'gr') %>
+        <h1 class="text-center mt-4">Σύνδεση στο EducationApp</h1>
+    <% else %>
+        <h1 class="text-center mt-4">Sign up for EducationApp</h1>
+    <% end %>
+        <%= render 'form' %>
+</div>

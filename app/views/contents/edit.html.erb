@@ -1,0 +1,8 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+        <h1 class="text-center mt-4">Επεξεργασία Υλικού</h1>
+    <% else %>
+        <h1 class="text-center mt-4">Editing Content</h1>
+    <% end %>
+
+<%= render 'form', content: @content %>
+<%= link_to session[:lang] == 'en' ? 'Back' : 'Πίσω', subject_path(@subject), class:"btn btn-dark" %>

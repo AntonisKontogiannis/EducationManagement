@@ -1,0 +1,9 @@
+    <% if (session[:lang].nil? or session[:lang] == 'gr') %>
+        <h2 class="text-center mt-4">Νέο Υλικό για το μάθημα <%= @subject.title %></h2>
+    <% else %>
+        <h2 class="text-center mt-4">New Content for <%= @subject.title %></h2>
+    <% end %>
+
+<%= render 'form', content: @content %>
+
+<a class="btn btn-outline-dark mx-1 mt-4" href="<%= subject_path(@subject) %>"><i class="fa-solid fa-arrow-left"></i> <%= (session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back" %></a>

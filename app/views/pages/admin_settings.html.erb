@@ -1,0 +1,28 @@
+<% if (session[:lang].nil? or session[:lang] == 'gr') %>
+    <h2 class="mt-2">Ρυθμίσεις Διαχειριστή</h2>
+<% else %>
+    <h2 class="mt-2">Admin's Settings</h2>
+<% end %>
+
+<table class="table table-striped">
+    <thead class="table-secondary">
+        <tr>
+            <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Name" %></th>
+            <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Τιμή" : "Value" %></th>
+            <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions" %></th>
+        </tr>
+    </thead>
+  <tbody>
+    <% @settings.each do |setting|%>
+        <tr>
+            <%= form_with(model: setting, url: global_settings_update_path) do |form| %>
+                <td><%= setting.title %></td>
+                <%= form.hidden_field :id, value: setting.id %>
+                <td><%= form.text_field :value, value: setting.value, class:"form-control rounded" %></td>
+                <td><%= form.submit (session[:lang].nil? or session[:lang] == 'gr')? 'Ανανέωση': "Refresh", class: "btn btn-outline-warning" %></td>
+            <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+<a class="btn btn-outline-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>

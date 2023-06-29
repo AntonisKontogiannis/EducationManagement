@@ -1,0 +1,30 @@
+<nav class="navbar navbar-light bg-info justify-content-between sticky-top">
+  <div class="navbar-brand mx-2 text-light fs-1 font-weight-bold my-2">EducationApp</div>
+  <div class="ml-2 d-flex align-items-center">
+    <%= form_with(scope: :session, url: language_update_path_path, local: true) do |f|%>
+      <%= f.select :lang, ['gr', 'en'], {:include_blank => session[:lang] == 'en' ? 'Select' : 'Επέλεξε', :selected=> session[:lang].nil? ? 'gr' : session[:lang]}, { class:"form-select ml-2", style:"width: 75%;", onchange: 'this.form.submit()'} %>
+    <% end %>
+    <% unless @current_user.nil? %>
+      <% if @current_user.role == 'Admin' %>
+        <a class="btn btn-outline-light my-2" href="<%= new_semester_path %>"><i class="fa-solid fa-plus"></i> <%= session[:lang] == 'en' ? 'Add Semester' : 'Εξάμηνο' %></a>
+        <a class="btn btn-outline-light my-2" href="<%= new_subject_path %>"><i class="fa-solid fa-plus"></i> <%= session[:lang] == 'en' ? 'Add Subject' : 'Μάθημα' %></a>
+        <a class="btn btn-outline-light my-2" href="<%= admin_settings_path %>"><i class="fa-solid fa-gears"></i> <%= session[:lang] == 'en' ? 'Settings' : 'Ρυθμίσεις' %></a>
+        <a class="btn btn-outline-light my-2 mr-3" href="<%= control_panel_path %>"><i class="fa-solid fa-sliders"></i> <%= session[:lang] == 'en' ? 'Control Panel' : 'Πίνακας Ελέγχου' %></a>
+      <% elsif @current_user.role == 'Professor' %>
+        <a class="btn btn-outline-light my-2" href="<%= root_path %>"><i class="fa-solid fa-house"></i></a>
+        <a class="btn btn-outline-light my-2 mx-2" href="<%= subjects_path %>"><i class="fa-solid fa-book"></i> <%= session[:lang] == 'en' ? 'All Subjects' : 'Μαθήματα' %></a>
+        <a class="btn btn-outline-light my-2 mx-2" href="<%= new_subject_path %>"><i class="fa-solid fa-plus"></i> <%= session[:lang] == 'en' ? 'Add Subject' : 'Μάθημα' %></a>
+      <% else %>
+        <a class="btn btn-outline-light my-2" href="<%= root_path %>"><i class="fa-solid fa-house"></i></a>
+        <a class="btn btn-outline-light my-2 mx-2" href="<%= subjects_path %>"><i class="fa-solid fa-book"></i> <%= session[:lang] == 'en' ? 'All Subjects' : 'Μαθήματα' %></a>
+      <% end %>
+      <% if @current_user.avatar.attached? %>
+        <%= image_tag @current_user.avatar, style: "width: 35px; height: 35px; object-fit: cover;", class: "rounded mx-3"%>
+      <% else %>
+        <i class="fa-regular fa-user text-align-center mx-3" style="font-size: 20px;"></i>
+      <% end %>
+      <a class="btn btn-outline-light my-2" href="<%= edit_user_path(@current_user) %>"><i class="fa-solid fa-gear"></i></a>
+      <%= link_to session[:lang] == 'en' ? 'Log Out' : 'Αποσύνδεση', logout_path, method: :delete, class: 'btn btn-outline-light my-2' %>
+    <% end %>
+  </div>
+</nav>
