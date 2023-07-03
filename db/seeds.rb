@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 GlobalSetting.create(title: "professor_password", value: "professor")
 GlobalSetting.create(title: "admin_password", value: "admin")
-Semester.create(en_title: "1st Semester", gr_title: "1ο Εξάμμηνο")
-Semester.create(en_title: "2nd Semester", gr_title: "2ο Εξάμμηνο")
-Semester.create(en_title: "3rd Semester", gr_title: "3ο Εξάμμηνο")
+Semester.create(en_title: "1st Semester", gr_title: "1ο Εξάμηνο")
+Semester.create(en_title: "2nd Semester", gr_title: "2ο Εξάμηνο")
+Semester.create(en_title: "3rd Semester", gr_title: "3ο Εξάμηνο")
 (4..10).each do |n|
-    Semester.create(en_title: "#{n}th Semester", gr_title: "#{n}ο Εξάμμηνο")
+    Semester.create(en_title: "#{n}th Semester", gr_title: "#{n}ο Εξάμηνο")
 end
