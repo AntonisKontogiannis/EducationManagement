@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10">
-          <%= form_with(model: content, class: "shadow p-3 mb-3 bg-dark") do |form| %>
+          <%= form_with(model: content, class: "shadow p-3 mb-3 bg-success") do |form| %>
             <% if content.errors.any? %>
               <div id="error_explanation">
                 <h2><%= pluralize(content.errors.count, "error") %> prohibited this content from being saved:</h2>
@@ -44,7 +44,7 @@
             </div>
 
             <div class="actions">
-              <%= form.submit (session[:lang].nil? or session[:lang] == 'gr')?  "Καταχώρηση Υλικού" : "Submit" , id:"submitContentButton", class:"btn btn-outline-light mt-2", disabled: true %>
+              <%= form.submit (session[:lang].nil? or session[:lang] == 'gr')?  "Καταχώρηση Υλικού" : "Submit" , id:"submitContentButton", class:"btn btn-light mt-2", disabled: true %>
             </div>
           <% end %>
         </div>

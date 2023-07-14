@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-10">
-          <%= form_with(model: subject, class: "shadow p-3 mb-3 bg-dark") do |form| %>
+          <%= form_with(model: subject, class: "shadow p-3 mb-3 bg-success") do |form| %>
             <% if subject.errors.any? %>
               <div id="error_explanation">
                 <h2><%= pluralize(subject.errors.count, "error") %> prohibited this subject from being saved:</h2>
@@ -25,9 +25,9 @@
 
             <div class="d-flex justify-content-between mt-5">
               <% if (session[:lang].nil? or session[:lang] == 'gr') %>
-                <%= form.submit @subject.new_record? ? "Δημιουργία Μαθήματος" : "Ανανέωση Μαθήματος", class: "btn btn-outline-light", id:"submit_button" %>
+                <%= form.submit @subject.new_record? ? "Δημιουργία Μαθήματος" : "Ανανέωση Μαθήματος", class: "btn btn-light", id:"submit_button" %>
               <% else %>
-                <%= form.submit @subject.new_record? ? "Create Subject" : "Update Subject", class: "btn btn-outline-light", id:"submit_button" %>
+                <%= form.submit @subject.new_record? ? "Create Subject" : "Update Subject", class: "btn btn-light", id:"submit_button" %>
               <% end %>
               <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : 'Show', @subject, class: "btn btn-outline-secondary text-light"  %>
               <a class="btn btn-outline-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>

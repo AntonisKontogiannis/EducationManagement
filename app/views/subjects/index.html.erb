@@ -15,8 +15,8 @@
       </h3>
       <div id="<%= semester.id %>-Collapse" class="accordion-collapse collapse show" aria-labelledby="<%= semester.id %>-Header" data-bs-parent="#accordion-<%= semester.id %>">
         <div class="accordion-body">
-          <table class="table table-striped">
-            <thead class="table-secondary">
+          <table class="table table-striped table-success">
+            <thead style="font-size: 15px;">
               <tr>
                 <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject"%></th>
                 <% if @current_user.role == "Student" %>
@@ -28,7 +28,7 @@
               </tr>
             </thead>
 
-            <tbody>
+            <tbody style="font-size: 14px;">
               <% semester.subjects.each do |subject| %>
                 <tr>
                   <td><%= subject.title %></td>
@@ -60,5 +60,5 @@
     </div>
   </div>
 <% end %>
-<a class="btn btn-outline-dark mt-2" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>
+<a class="btn btn-outline-success mt-2" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>
 

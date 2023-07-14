@@ -18,3 +18,13 @@
 .btn-outline-warning{
     color: black;
 }
+
+.accordion-button:not(.collapsed){
+    background-color: #d6fffa;
+    color: #265828;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0,0,0,.125);
+}

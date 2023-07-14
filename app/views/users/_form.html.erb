@@ -2,7 +2,7 @@
     <div class="row justify-content-center">
         <div class="col-10">
         <%= render'shared/errors', obj: @user %>
-            <%= form_with(model: @user, class: "shadow p-3 mb-3 bg-dark", local: true) do |f|%>
+            <%= form_with(model: @user, class: "shadow p-3 mb-3 bg-success", local: true) do |f|%>
                 <% if not @current_user.nil? %>
                     <div class="form-group row mt-2 text-light">
                         <%= f.label :avatar, class: "col-2 col-form-label", value: "Photo" %>
@@ -66,14 +66,14 @@
                 <div class="form-group mt-4">
                     <div class="d-flex justify-content-between">
                         <% if (session[:lang].nil? or session[:lang] == 'gr') %>
-                            <%= f.submit(@user.new_record? ? "Δημιουργία" : "Ανανέωση", class: "btn btn-outline-light", id:"submit_button") %>
+                            <%= f.submit(@user.new_record? ? "Δημιουργία" : "Ανανέωση", class: "btn btn-light", id:"submit_button") %>
                         <% else %>
-                            <%= f.submit(@user.new_record? ? "Sign up" : "Update account", class: "btn btn-outline-light", id:"submit_button") %>
+                            <%= f.submit(@user.new_record? ? "Sign up" : "Update account", class: "btn btn-light", id:"submit_button") %>
                         <% end %>
                         <% if not @current_user.nil? %>
-                            <a class="btn btn-outline-light <%= 'd-none' if current_user %>" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
+                            <a class="btn btn-light <%= 'd-none' if current_user %>" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
                         <% else %>
-                            <a class="btn btn-outline-light <%= 'd-none' if current_user %>" href="<%= login_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
+                            <a class="btn btn-light <%= 'd-none' if current_user %>" href="<%= login_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
                         <% end %>
                     </div>
                 </div>

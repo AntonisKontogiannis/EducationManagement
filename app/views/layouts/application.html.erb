@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>EducationManagment</title>
+    <title>EducationApp</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <%= csrf_meta_tags %>
@@ -11,28 +11,75 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body style="margin: 0px">
+  <body style="margin: 0px; width: 100%; height:100%; background:#ffedec">
+    <script>
+      function showModal(id){
+        var myModal = new bootstrap.Modal(document.getElementById(id));
+        myModal.show();
+      }
+    </script>
     <%= render 'partials/top_bar' %>
     <% if notice %>
-      <div class="d-flex justify-content-center">
-        <div class="alert alert-info alert-dismissible fade show w-50 " role="alert">
-          <h6><%= notice %></h6>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <!-- Modal -->
+      <div class="modal fade show" id="noticeModal">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header bg-success text-light">
+              <h4 class="modal-title"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ειδοποίηση" : "Notice"%></h4>
+              <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #afeeee">
+              <div class="d-flex justify-content-center">
+                <div class="alert text-dark show" role="alert">
+                  <h5 class="text-dark"><%= notice %></h5>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
 
     <% if alert %>
-      <div class="d-flex justify-content-center">
-        <div class="alert alert-warning alert-dismissible fade show w-50" role="alert">
-          <h6><%= alert %></h6>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <!-- Modal -->
+      <div class="modal fade show" id="alertModal">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header bg-success text-light">
+              <h4 class="modal-title"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Σφάλμα" : "Alert"%></h4>
+              <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="background-color: #ffffe0">
+              <div class="d-flex justify-content-center">
+                <div class="alert text-dark show" role="alert">
+                  <h5 class="text-dark"><%= alert %></h5>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     <% end %>
-
-    <%= yield %>
+    <div style="width: 90%; margin-left: auto; margin-right: auto; margin-top: 50px; margin-bottom:50px;">
+      <%= yield %>
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>  </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>  
+    <% if alert or notice %>
+      <% if alert %>
+        <script>
+          var myModal = new bootstrap.Modal(document.getElementById("alertModal"));
+          myModal.show();
+        </script>
+      <% elsif notice %>
+        <script>
+          var myModal = new bootstrap.Modal(document.getElementById("noticeModal"));
+          myModal.show();
+        </script>
+      <% end %>
+    <% end %>
+  </body>
 </html>

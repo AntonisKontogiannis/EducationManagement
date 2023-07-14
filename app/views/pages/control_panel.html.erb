@@ -14,15 +14,15 @@
     </h2>
     <div id="semestersCollapse" class="accordion-collapse collapse" aria-labelledby="semestersHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped table-success">
+            <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "A/A" : "No"%></th>
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Εξάμηνο" : "Semester"%></th>
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Αριθμός Μαθημάτων" : "Subjects"%></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 14px;">
                 <% @semesters.each do |semester| %>
                     <tr>
                         <th scope="row"><%= semester.id %></th>
@@ -43,8 +43,8 @@
     </h2>
     <div id="subjectsCollapase" class="accordion-collapse collapse show" aria-labelledby="subjectsHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped table-success">
+            <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject" %></th>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Εξάμηνο" : "Semester" %></th>
@@ -52,7 +52,7 @@
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 14px;">
                 <% @subjects.each do |subject| %>
                     <tr>
                         <td><%= subject.title %></td>
@@ -78,8 +78,8 @@
     </h2>
     <div id="subjectsCollapse" class="accordion-collapse collapse" aria-labelledby="studentsHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped table-success">
+            <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name" %></th>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μαθήματα" : "Subjects" %></th>
@@ -87,7 +87,7 @@
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 14px;">
                 <% @students.each do |student| %>
                     <tr>
                         <td><%= student.full_name %></td>
@@ -133,8 +133,8 @@
     </h2>
     <div id="professorsCollapse" class="accordion-collapse collapse" aria-labelledby="professorsHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped">
-            <thead>
+        <table class="table table-striped table-success">
+            <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name" %></th>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μαθήματα" : "Subjects" %></th>
@@ -142,7 +142,7 @@
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 14px;">
                 <% @professors.each do |professor| %>
                     <tr>
                         <td><%= professor.full_name %></td>

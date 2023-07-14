@@ -10,7 +10,7 @@
       <div id="professorsCollapse" class="accordion-collapse collapse show" aria-labelledby="professorsHeader" data-bs-parent="#accordion-professors">
         <div class="accordion-body">
           <table class="table table-striped">
-            <thead class="table-secondary">
+            <thead class="table-success">
               <tr>
                 <th></th>
                 <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name"%></th>
@@ -78,7 +78,7 @@
             <a class="btn btn-outline-dark mb-2" href="<%= new_content_path(subject_id: @subject.id) %>"><i class="fa-solid fa-plus"></i> Υλικό</a>
           <% end %>
           <table class="table table-striped">
-            <thead class="table-secondary">
+            <thead class="table-success">
               <tr>
                 <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Τίτλος" : "Title"%></th>
                 <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή" : "Description"%></th>
@@ -154,7 +154,7 @@
       <div id="studentsCollapse" class="accordion-collapse collapse show" aria-labelledby="studentsHeader" data-bs-parent="#accordion-students">
         <div class="accordion-body">
           <table class="table table-striped">
-            <thead class="table-secondary">
+            <thead class="table-success">
               <tr>
                 <th></th>
                 <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full name"%></th>

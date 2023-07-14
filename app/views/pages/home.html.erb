@@ -4,20 +4,20 @@
     <h2 class="mt-2"><i class="fa-solid fa-house"></i> My Subjects</h2>
 <% end %>
 
-<table class="table table-striped mt-3">
-    <thead class="table-secondary">
+<table class="table table-striped mt-3 table-success">
+    <thead style="font-size: 15px;">
         <tr>
-        <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject"%></th>
-        <% if @current_user.role == "Student" %>
-            <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Διδάσκων" : "Professor"%></th>
-        <% else %>
-            <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Φοιτητές" : "Students"%></th>
-        <% end %>
-        <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
+            <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject"%></th>
+            <% if @current_user.role == "Student" %>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Διδάσκων" : "Professor"%></th>
+            <% else %>
+                <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Φοιτητές" : "Students"%></th>
+            <% end %>
+            <th><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ενέργειες" : "Actions"%></th>
         </tr>
     </thead>
 
-    <tbody>
+    <tbody style="font-size: 14px;">
         <% @current_user.subjects.each do |subject| %>
         <tr>
             <td><%= subject.title %></td>
