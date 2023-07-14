@@ -19,10 +19,10 @@
                 <td><%= setting.title %></td>
                 <%= form.hidden_field :id, value: setting.id %>
                 <td><%= form.text_field :value, value: setting.value, class:"form-control rounded" %></td>
-                <td><%= form.submit (session[:lang].nil? or session[:lang] == 'gr')? 'Ανανέωση': "Refresh", class: "btn btn-outline-warning" %></td>
+                <td><%= form.submit (session[:lang].nil? or session[:lang] == 'gr')? 'Ανανέωση': "Refresh", class: "btn btn-warning" %></td>
             <% end %>
         </tr>
     <% end %>
   </tbody>
 </table>
-<a class="btn btn-outline-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
+<a class="btn btn-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>

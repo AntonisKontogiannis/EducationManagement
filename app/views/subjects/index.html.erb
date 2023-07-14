@@ -38,17 +38,17 @@
                      <td><%= subject.students_size %></td>
                   <% end %>
                   <td class="d-flex">
-                    <a class="btn btn-outline-dark mx-1" href="<%= subject_path(subject) %>"><i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%></a>
+                    <a class="btn btn-dark mx-1" href="<%= subject_path(subject) %>"><i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%></a>
                     <% if not @user_attends.include?(subject.id.to_s) %>
                       <%= form_with(model: @subject_attend, url: subject_attends_path) do |form| %>
                         <%= form.hidden_field :subject_id, value: subject.id %>
                         <%= form.hidden_field :user_id, value: @current_user.id %>
-                        <%= form.submit (session[:lang].nil? or session[:lang] == 'gr')?  'Συμμετοχή' : "Attend", class: "btn btn-outline-dark mx-1" %>
+                        <%= form.submit (session[:lang].nil? or session[:lang] == 'gr')?  'Συμμετοχή' : "Attend", class: "btn btn-dark mx-1" %>
                       <% end %>
                     <% else %>
-                      <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Αποχώρηση' : "Resign", subject_attend_path(SubjectAttend.find_by(subject_id: subject.id, user_id: @current_user.id)), method: :delete, class: 'btn btn-outline-warning' %>
+                      <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Αποχώρηση' : "Resign", subject_attend_path(SubjectAttend.find_by(subject_id: subject.id, user_id: @current_user.id)), method: :delete, class: 'btn btn-warning' %>
                       <% if @current_user.role == "Professor" %>
-                        <a class="btn btn-outline-dark mx-1" href="<%= edit_subject_path(subject) %>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
+                        <a class="btn btn-dark mx-1" href="<%= edit_subject_path(subject) %>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
                       <% end %>
                     <% end %>
                 </tr>
@@ -60,5 +60,5 @@
     </div>
   </div>
 <% end %>
-<a class="btn btn-outline-success mt-2" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>
+<a class="btn btn-success mt-2" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>
 

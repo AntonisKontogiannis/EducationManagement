@@ -59,9 +59,9 @@
                         <td><%= (session[:lang].nil? or session[:lang] == 'gr') ? subject.semester.gr_title : subject.semester.en_title %></td>
                         <td><%= subject.subject_attends.size %></td>
                         <td>
-                            <a class="btn btn-outline-dark" href="<%= edit_subject_path(subject) %>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
-                            <a class="btn btn-outline-dark" href="<%= subject_path(subject) %>"><i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%></a>
-                            <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", subject_path(subject), method: :delete, class: 'btn btn-outline-danger my-2 mx-4' %>
+                            <a class="btn btn-dark" href="<%= edit_subject_path(subject) %>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
+                            <a class="btn btn-dark" href="<%= subject_path(subject) %>"><i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%></a>
+                            <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", subject_path(subject), method: :delete, class: 'btn btn-danger my-2 mx-4' %>
                         </td>
                     </tr>
                 <% end %>
@@ -94,10 +94,10 @@
                         <td><%= student.subject_attends.size %></td>
                         <td><%= student.email %></td>
                         <td>
-                          <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#studentsModal-#{student.id}"%>">
+                          <button type="button" class="btn btn-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#studentsModal-#{student.id}"%>">
                             <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
                           </button>
-                          <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", user_path(student), method: :delete, class: 'btn btn-outline-danger my-2 mx-4' %>
+                          <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", user_path(student), method: :delete, class: 'btn btn-danger my-2 mx-4' %>
                         </td>
                     </tr>
                     <!-- Student_Modal -->
@@ -149,10 +149,10 @@
                         <td><%= professor.subject_attends.size %></td>
                         <td><%= professor.email %></td>
                         <td>
-                          <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#professorsModal-#{professor.id}"%>">
+                          <button type="button" class="btn btn-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#professorsModal-#{professor.id}"%>">
                             <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
                           </button>
-                          <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", user_path(professor), method: :delete, class: 'btn btn-outline-danger my-2 mx-4' %>
+                          <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", user_path(professor), method: :delete, class: 'btn btn-danger my-2 mx-4' %>
                         </td>
                     </tr>
                     <!-- professor_Modal -->

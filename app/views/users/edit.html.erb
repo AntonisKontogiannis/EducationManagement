@@ -6,4 +6,4 @@
 
 <%= render 'form', user: @user %>
 
-<a class="btn btn-outline-dark ml-2" href="<%= subjects_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>
+<a class="btn btn-dark ml-2" href="<%= subjects_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Πίσω" : "Back"%></a>

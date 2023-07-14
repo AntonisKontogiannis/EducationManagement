@@ -21,7 +21,7 @@
                 </div>
                 <div class="d-flex justify-content-between mt-3">
                     <%= f.submit (session[:lang].nil? or session[:lang] == 'gr')?  'Δημιουργία' : "Create Semester" , class: "btn btn-light" %>
-                    <a class="btn btn-outline-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
+                    <a class="btn btn-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
                 </div>
                 </div>
             <% end %>

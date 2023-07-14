@@ -29,8 +29,8 @@
               <% else %>
                 <%= form.submit @subject.new_record? ? "Create Subject" : "Update Subject", class: "btn btn-light", id:"submit_button" %>
               <% end %>
-              <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : 'Show', @subject, class: "btn btn-outline-secondary text-light"  %>
-              <a class="btn btn-outline-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
+              <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : 'Show', @subject, class: "btn btn-secondary text-light"  %>
+              <a class="btn btn-dark" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')? 'Πίσω': "Back"%></a>
             </div>
           <% end %>
           </div>

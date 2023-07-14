@@ -31,11 +31,11 @@
                     <td><%= professor.full_name %></td>
                     <td><%= professor.subject_attends.find_by(subject_id: @subject.id).created_at.to_date %></td>
                     <td class="d-flex">
-                      <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#professorsModal-#{professor.id}"%>">
+                      <button type="button" class="btn btn-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#professorsModal-#{professor.id}"%>">
                         <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
                       </button>
                     <% if @current_user.role == "Admin" or (@current_user.role == "Professor" and @current_user == professor)%>
-                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Απεγγραφή" : "Resign", professor.subject_attends.find_by(subject_id: @subject.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %></td>
+                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Απεγγραφή" : "Resign", professor.subject_attends.find_by(subject_id: @subject.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
                     <% end %>
                 </tr>
                 <!-- professor_Modal -->
@@ -75,7 +75,7 @@
       <div id="contentCollapse" class="accordion-collapse collapse show" aria-labelledby="contentHeader" data-bs-parent="#accordion-content">
         <div class="accordion-body">
           <% if (@current_user.role == "Professor" and not @current_user.subject_attends.find_by(subject_id: @subject.id).nil?) %>
-            <a class="btn btn-outline-dark mb-2" href="<%= new_content_path(subject_id: @subject.id) %>"><i class="fa-solid fa-plus"></i> Υλικό</a>
+            <a class="btn btn-dark mb-2" href="<%= new_content_path(subject_id: @subject.id) %>"><i class="fa-solid fa-plus"></i> Υλικό</a>
           <% end %>
           <table class="table table-striped">
             <thead class="table-dark">
@@ -96,12 +96,12 @@
                     <td><%= content.category %></td>
                     <td><%= content.created_at.to_date %></td>
                     <td class="d-flex">
-                      <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#contentModal-#{content.id}"%>">
+                      <button type="button" class="btn btn-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#contentModal-#{content.id}"%>">
                         <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
                       </button>
                     <% if @current_user.role == "Admin" or (@current_user.role == "Professor" and not @current_user.subject_attends.find_by(subject_id: @subject.id).nil?)%>
-                        <a class="btn btn-outline-dark mx-1" href="<%= edit_content_path(content, subject_id: content.subject_id )%>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
-                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", content, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %></td>
+                        <a class="btn btn-dark mx-1" href="<%= edit_content_path(content, subject_id: content.subject_id )%>"><i class="fa-solid fa-screwdriver-wrench"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επεξεργασία" : "Edit"%></a>
+                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  'Διαγραφή' : "Delete", content, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
                     <% end %>
                 </tr>
                 <!-- Content_Modal -->
@@ -175,11 +175,11 @@
                     <td><%= student.full_name %></td>
                     <td><%= student.subject_attends.find_by(subject_id: @subject.id).created_at.to_date %></td>
                     <td class="d-flex">
-                      <button type="button" class="btn btn-outline-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#studentsModal-#{student.id}"%>">
+                      <button type="button" class="btn btn-dark mx-1" data-bs-toggle="modal" data-bs-target="<%="#studentsModal-#{student.id}"%>">
                         <i class="fa-solid fa-eye"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Προβολή" : "Show"%>
                       </button>
                     <% if @current_user.role == "Admin" or (@current_user.role == "Professor" and not @current_user.subject_attends.find_by(subject_id: @subject.id).nil?) or (@current_user.role == "Student" and @current_user == student)%>
-                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Απεγγραφή" : "Resign", student.subject_attends.find_by(subject_id: @subject.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger" %></td>
+                        <%= link_to (session[:lang].nil? or session[:lang] == 'gr')?  "Απεγγραφή" : "Resign", student.subject_attends.find_by(subject_id: @subject.id), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
                     <% end %>
                 </tr>
                 <!-- Student_Modal -->
@@ -209,4 +209,4 @@
     </div>
   </div>
 
-<a class="btn btn-outline-dark mx-1 mt-4" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i></i> Πίσω</a>
+<a class="btn btn-dark mx-1 mt-4" href="<%= root_path %>"><i class="fa-solid fa-arrow-left"></i></i> Πίσω</a>
