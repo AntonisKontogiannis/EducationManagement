@@ -14,7 +14,7 @@
     </h2>
     <div id="semestersCollapse" class="accordion-collapse collapse" aria-labelledby="semestersHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped table-success">
+        <table class="table table-striped table-dark">
             <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "A/A" : "No"%></th>
@@ -43,7 +43,7 @@
     </h2>
     <div id="subjectsCollapase" class="accordion-collapse collapse show" aria-labelledby="subjectsHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped table-success">
+        <table class="table table-striped table-dark">
             <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Μάθημα" : "Subject" %></th>
@@ -78,7 +78,7 @@
     </h2>
     <div id="subjectsCollapse" class="accordion-collapse collapse" aria-labelledby="studentsHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped table-success">
+        <table class="table table-striped table-dark">
             <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name" %></th>
@@ -133,7 +133,7 @@
     </h2>
     <div id="professorsCollapse" class="accordion-collapse collapse" aria-labelledby="professorsHeader" data-bs-parent="#accordionControlPanel">
       <div class="accordion-body">
-        <table class="table table-striped table-success">
+        <table class="table table-striped table-dark">
             <thead class="text-dark" style="font-size: 15px;">
                 <tr>
                 <th scope="col"><%= (session[:lang].nil? or session[:lang] == 'gr')?  "Όνομα" : "Full Name" %></th>

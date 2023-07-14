@@ -1,6 +1,6 @@
 <nav class="navbar navbar-light bg-success justify-content-between sticky-top">
-  <div class="navbar-brand mx-2 text-light fs-1 my-2" style="font-weight: 800; font-family: monospace; pointer-events: none;">EducationApp</div>
-  <div class="ml-2 d-flex align-items-center">
+  <div class="navbar-brand mx-2 text-light fs-1 my-2" style="font-weight: 800; font-family: monospace; pointer-events: none;"><i class="p-0 fa-sharp fa-solid fa-bookmark"></i> EducationApp</div>
+  <div class="ml-2 d-flex align-items-center px-3">
     <%= form_with(scope: :session, url: language_update_path_path, local: true) do |f|%>
       <%= f.select :lang, ['gr', 'en'], {:include_blank => session[:lang] == 'en' ? 'Select' : 'Επέλεξε', :selected=> session[:lang].nil? ? 'gr' : session[:lang]}, { class:"form-select ml-2", style:"width: 75%;", onchange: 'this.form.submit()'} %>
     <% end %>
@@ -24,7 +24,7 @@
         <i class="fa-regular fa-user text-align-center mx-3" style="font-size: 20px;"></i>
       <% end %>
       <a class="btn btn-light text-dark my-2" href="<%= edit_user_path(@current_user) %>"><i class="fa-solid fa-gear"></i></a>
-      <%= link_to session[:lang] == 'en' ? 'Log Out' : 'Αποσύνδεση', logout_path, method: :delete, class: 'btn btn-light text-dark my-2' %>
+      <%= link_to session[:lang] == 'en' ? 'Log Out' : 'Αποσύνδεση', logout_path, method: :delete, class: 'btn btn-light text-dark my-2 mx-2' %>
     <% end %>
   </div>
 </nav>
