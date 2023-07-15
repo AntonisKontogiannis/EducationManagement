@@ -16,12 +16,13 @@ class ContentsController < ApplicationController
   # POST /contents or /contents.json
   def create
     @content = Content.new(content_params)
+    @subject = Subject.find(@content.subject_id)
     respond_to do |format|
       if @content.save
         format.html { redirect_to subject_path(@content.subject_id), notice: (session[:lang].nil? or session[:lang] == 'gr')? "Το υλικό δημιουργήθηκε με επιτυχία." : "Content was successfully created." }
         format.json { render :show, status: :created, location: @content }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to new_content_path(subject_id: @subject.id), alert: (session[:lang].nil? or session[:lang] == 'gr')? "Το υλικό δεν δημιουργήθηκε." : "Content was not created."}
         format.json { render json: @content.errors, status: :unprocessable_entity }
       end
     end

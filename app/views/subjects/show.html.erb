@@ -114,9 +114,8 @@
                       </div>
                       <div class="modal-body">
                         <h6 class="mt-2"><strong> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή" : "Description"%>:</strong> <%= content.description %></h6>
-                        <% if content.category == 'Link'%>
-                          <h6 class="mt-2"><strong>Link:</strong> <a href="<%= content.url %>" target="_blank"><%= content.url %></a></h6>
-                        <% elsif content.category == 'Image'%>
+                        <h6 class="mt-2"><strong>Link:</strong> <a href="<%= content.url %>" target="_blank"><%= content.url %></a></h6>
+                        <% if content.category == 'Image'%>
                           <% if content.file.attached? %>
                             <%= image_tag content.file, class:"card-img-top" %>
                             <h6 class="mt-2"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε την εικόνα" : "Download the image"%>: </strong></h6>

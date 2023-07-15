@@ -2,26 +2,16 @@
     <div class="row justify-content-center">
         <div class="col-10">
           <%= form_with(model: content, class: "shadow p-3 mb-3 bg-success") do |form| %>
-            <% if content.errors.any? %>
-              <div id="error_explanation">
-                <h2><%= pluralize(content.errors.count, "error") %> prohibited this content from being saved:</h2>
-
-                <ul>
-                  <% content.errors.each do |error| %>
-                    <li><%= error.full_message %></li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
+            <%= render '/shared/errors', obj: content %>
 
             <div class="field">
               <%= form.label :title, class: "col-2 col-form-label text-light", value: (session[:lang].nil? or session[:lang] == 'gr')?  "Τίτλος" : "Title" %>
-              <%= form.text_field :title, class: "form-control shadow rounded" , placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Τίτλος υλικού μαθήματος" : "Content title", oninput: "enablePublish()" %>
+              <%= form.text_field :title, class: "form-control shadow rounded" , placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Τίτλος υλικού μαθήματος (τουλάχιστον 6 χαρακτήρες)" : "Content title (at least 6 characters)", oninput: "enablePublish()" %>
             </div>
 
             <div class="field">
               <%= form.label :description, class: "col-2 col-form-label text-light" %>
-              <%= form.text_area :description, class: "form-control shadow rounded", placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή υλικού μαθήματος" : "Content description" , oninput: "enablePublish()"%>
+              <%= form.text_area :description, class: "form-control shadow rounded", placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή υλικού μαθήματος (τουλάχιστον 10 χαρακτήρες)" : "Content description (at least 10 characters)" , oninput: "enablePublish()"%>
             </div>
 
             <%= form.hidden_field :subject_id, value: @subject.id %>
@@ -29,16 +19,33 @@
             <div class="field">
               <div class="form-group row mt-3">
                     <%= form.label :category, class: "col-2 col-form-label text-light", value: (session[:lang].nil? or session[:lang] == 'gr')?  "Κατηγορία" : "Category" %>
-                    <%= form.select :category, ['Link', 'Image', 'File'], {}, { class:"form-select ml-2", style:"width: 82%;", onchange:"hideField(); enablePublish();"} %>
+                    <%= form.select :category, ['Image', 'File'], {}, { class:"form-select ml-2", style:"width: 82%;", onchange:"enablePublish();"} %>
                 </div> 
               </div>
 
             <div class="field" id="urlField">
               <%= form.label :url, class: "col-2 col-form-label text-light" %>
-              <%= form.text_field :url, class: "form-control shadow rounded", placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Σύνδεσμος υλικού" : "Content link", oninput: "enablePublish()" %>
+              <%= form.url_field :url, class: "form-control shadow rounded", placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Σύνδεσμος υλικού" : "Content link" %>
             </div>
 
-            <div class="field text-light d-none" id="fileField">
+            <% if content.category == 'Image'%>
+              <% if content.file.attached? %>
+                <%= image_tag content.file, class:"w-50" %>
+                <h6 class="mt-2 text-light"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επιλεγμένη Εικόνα" : "Choosen image"%>: </strong></h6>
+                <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
+              <% else %>
+                <img src="https://i1.wp.com/www.slntechnologies.com/wp-content/uploads/2017/08/ef3-placeholder-image.jpg" class="w-50" alt="">
+              <% end %>
+            <% elsif content.category == 'File'%>
+              <% if content.file.attached? %>
+                <h6 class="mt-2 text-light"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επιλεγμένo αρχείο" : "Choosen file"%>:</strong></h6>
+                <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
+              <% else %>
+                <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Δεν βρέθηκε αρχείο. Παρακαλώ επεξεργαστείτε το υλικό." : "Nothing found, please edit this content."%>
+              <% end %>
+            <% end %>
+
+            <div class="field text-light" id="fileField">
               <%= form.label :file, class: "col-2 col-form-label text-light", value: (session[:lang].nil? or session[:lang] == 'gr')?  "Αρχείο" : "File" %>
               <%= form.file_field :file , onchange: "enablePublish()" %>
             </div>
@@ -52,19 +59,6 @@
   </div>
 
 <script>
-  function hideField() {
-    var content_category = document.getElementById("content_category").value;
-    if (content_category == "Link"){
-      document.getElementById("fileField").classList.add("d-none");
-      document.getElementById("urlField").classList.remove("d-none");
-      document.getElementById("content_file").value = null;
-    } else {
-      document.getElementById("fileField").classList.remove("d-none");
-      document.getElementById("urlField").classList.add("d-none");
-      document.getElementById("content_url").value = null;
-    }
-  }
-
   function enablePublish(){
     var title_check_result = title_check();
     var description_check_result = description_check();
@@ -79,7 +73,7 @@
   }
 
   function title_check(){
-    title = document.getElementById("content_title").value;
+    var title = document.getElementById("content_title").value;
     return (title != '' && title != null)
   }
 
@@ -89,17 +83,14 @@
   }
 
   function content_check(){
-    var content_category = document.getElementById("content_category").value;
-    if (content_category == "Link"){
-      var url = document.getElementById("content_url").value;
-      return (url != '' && url != null)
-    } else if (content_category == "Image"){
-      var file =   document.getElementById("content_file").value;
-      return (file != '' && file != null && (file.includes(".png") || file.includes(".jpg") || file.includes(".jpeg")))
-    } else if (content_category == "File") {
-      var file =   document.getElementById("content_file").value;
-      return (file != '' && file != null)
-    }
+      var content_category = document.getElementById("content_category").value;
+      if (content_category == "Image"){
+        var file =   document.getElementById("content_file").value;
+        return (file != '' && file != null && (file.includes(".png") || file.includes(".jpg") || file.includes(".jpeg") || file.includes(".webp") || file.includes(".svg")))
+      } else if (content_category == "File") {
+        var file =   document.getElementById("content_file").value;
+        return (file != '' && file != null)
+      }
   }  
   enablePublish();
 </script>
