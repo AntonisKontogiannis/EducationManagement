@@ -6,17 +6,17 @@
     <% end %>
     <div class="d-flex mt-2">
         <div>
-            <input class="search form-control" placeholder="Αναζήτηση" />
+            <input class="search form-control" placeholder="<%= (session[:lang].nil? or session[:lang] == 'gr') ? "Aναζήτηση" : "Search" %>" />
         </div>
         <div class="ml-2">
             <button class="sort btn btn-dark" data-sort="semester">
-                    Sort by semester
+                <%= (session[:lang].nil? or session[:lang] == 'gr') ? "Ταξινόμηση ανά εξάμηνο" : "Sort by semester" %> 
             </button>
         </div>
         <% if current_user.role != "Student"%>
             <div class="ml-2">
                 <button class="sort btn btn-dark" data-sort="students">
-                        Sort by students
+                    <%= (session[:lang].nil? or session[:lang] == 'gr') ? "Ταξινόμηση ανά φοιτητές" : " Sort by students" %>
                 </button>
             </div>
         <% end %>
