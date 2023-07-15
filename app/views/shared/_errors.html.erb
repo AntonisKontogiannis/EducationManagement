@@ -1,11 +1,31 @@
 <% if obj.errors.any? %>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <h2>There are the following errors for the <%= obj.class.name.downcase %>:</h2>
-        <ul>
-            <% obj.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-            <% end %>
-        </ul> 
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
+    <!-- Modal -->
+      <div class="modal fade show" id="errorModal">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header bg-success d-flex justify-content-between text-light">
+              <div style="width: 170px; height: 1px;"></div>
+              <h4 class="modal-title"><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Ειδοποίηση" : "Notice"%></h4>
+              <button type="button" class="btn-close btn btn-light" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="d-flex justify-content-center">
+                <div class="alert text-dark show" role="alert">
+                  <h5><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Υπάρχουν τα ακόλουθα λάθη στο " : "There are the following errors for the "%> <%= obj.class.name.downcase %>:</h5>
+                        <ul>
+                            <% obj.errors.full_messages.each do |msg| %>
+                                <li><%= msg %></li>
+                            <% end %>
+                        </ul> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        <script>
+            var myModal = new bootstrap.Modal(document.getElementById("errorModal"));
+            myModal.show();
+        </script>
 <% end %>

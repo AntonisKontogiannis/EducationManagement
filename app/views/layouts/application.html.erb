@@ -83,5 +83,12 @@
         </script>
       <% end %>
     <% end %>
+    <script>
+        var errorsNotification = document.getElementById("errorModal")
+        if (errorsNotification){
+          var myErrorsModal = new bootstrap.Modal(errorsNotification);
+          myErrorsModal.show();
+        }
+    </script>
   </body>
 </html>
