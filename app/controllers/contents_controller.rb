@@ -46,7 +46,7 @@ class ContentsController < ApplicationController
     @content.destroy
 
     respond_to do |format|
-      format.html { redirect_to contents_url, notice: (session[:lang].nil? or session[:lang] == 'gr')? "Το υλικό διαγράφηκε με επιτυχία." : "Content was successfully destroyed." }
+      format.html { redirect_to request.referrer, notice: (session[:lang].nil? or session[:lang] == 'gr')? "Το υλικό διαγράφηκε με επιτυχία." : "Content was successfully destroyed." }
       format.json { head :no_content }
     end
   end

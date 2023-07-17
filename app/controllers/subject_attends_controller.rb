@@ -42,7 +42,7 @@ class SubjectAttendsController < ApplicationController
     def authored_users
       if @current_user
         if @current_user.role == 'Professor' 
-          if @current_user.subject_attends.find(@subject_attend.id).nil?
+          if @current_user.subject_attends.find_by(subject_id: @subject_attend.subject_id).nil?
             respond_to do |format|
               format.html { redirect_to root_path, notice: (session[:lang].nil? or session[:lang] == 'gr')? "Πρέπει να συμμετέχεις για να κάνεις αυτή την ενέργεια" : "You must attend the subject to do this" }
             end
