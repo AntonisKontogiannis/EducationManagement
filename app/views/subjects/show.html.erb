@@ -48,17 +48,24 @@
               <div class="modal fade" id="<%="professorsModal-#{professor.id}"%>" tabindex="-1" aria-labelledby="<%="professorsModalLabel-#{professor.id}"%>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="<%="professorsModalLabel-#{professor.id}"%>"><%=professor.full_name%></h5>
+                    <div class="modal-header bg-success">
+                      <h5 class="modal-title text-light" id="<%="professorsModalLabel-#{professor.id}"%>"></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <% if professor.avatar.attached? %>
-                          <%= image_tag professor.avatar, class:"card-img-top" %>
-                      <% else %>
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top" alt="">
-                      <% end %>
-                      <h6 class="mt-2"><strong>Email:</strong> <%= professor.email %></h6>
+                      <div class="card flex-row border-0">
+                        <% if professor.avatar.attached? %>
+                          <%= image_tag professor.avatar, class:"card-img-top w-50" %>
+                        <% else %>
+                          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top w-50" alt="">
+                        <% end %>
+                        <div class="card-body d-flex aling-items-center">
+                          <div class="align-self-center">
+                            <h4 class="card-title"><%=professor.full_name%></h4>
+                            <p class="card-text"><h6><strong>Email:</strong> <a href="mailto:<%= professor.email %>" target="_blank"><%= professor.email %></a></h6></p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -120,28 +127,23 @@
               <div class="modal fade" id="<%="contentModal-#{content.id}"%>" tabindex="-1" aria-labelledby="<%="contentModalLabel-#{content.id}"%>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="<%="contentModalLabel-#{content.id}"%>"><%= content.title %></h5>
+                    <div class="modal-header bg-success">
+                      <h4 class="modal-title text-light" id="<%="contentModalLabel-#{content.id}"%>"><strong><%= content.title %></strong></h4>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <h6 class="mt-2"><strong> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή" : "Description"%>:</strong> <%= content.description %></h6>
-                      <h6 class="mt-2"><strong>Link:</strong> <a href="<%= content.url %>" target="_blank"><%= content.url %></a></h6>
-                      <% if content.category == 'Image'%>
-                        <% if content.file.attached? %>
-                          <%= image_tag content.file, class:"card-img-top" %>
-                          <h6 class="mt-2"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε την εικόνα" : "Download the image"%>: </strong></h6>
-                          <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
-                        <% else %>
-                          <img src="https://i1.wp.com/www.slntechnologies.com/wp-content/uploads/2017/08/ef3-placeholder-image.jpg" class="card-img-top" alt="">
-                        <% end %>
-                      <% elsif content.category == 'File'%>
-                        <% if content.file.attached? %>
-                          <h6 class="mt-2"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε το παρακάτω αρχείο" : "Download file"%>:</strong></h6>
-                          <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
-                        <% else %>
-                          <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Δεν βρέθηκε αρχείο. Παρακαλώ επεξεργαστείτε το υλικό." : "Nothing found, please edit this content."%>
-                        <% end %>
+                      <% if content.image.attached? %>
+                        <%= image_tag content.image, class:"card-img-top mt-4" %>
+                        <h6 class="mt-4"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε την εικόνα" : "Download the image"%>: </strong></h6>
+                        <%=link_to(content.image.filename, rails_blob_path(content.image, disposition: 'attachment'))%>
+                      <% end %>
+                      <h5 class="mt-4"><strong> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περιγραφή" : "Description"%>:</strong> <%= content.description %></h5>
+                      <% if not content.url.blank? %>
+                        <h6 class="mt-4"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Περισσότερες πληροφορίες στον σύνδεσμο" : "More details in the link"%>:</strong> <a href="<%= content.url %>" target="_blank"><%= content.url %></a></h6>
+                      <% end %>
+                      <% if content.file.attached? %>
+                        <h6 class="mt-5"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Κατεβάστε το αρχείο" : "Download file"%>:</strong></h6>
+                        <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
                       <% end %>
                     </div>
                   </div>
@@ -203,17 +205,24 @@
               <div class="modal fade" id="<%="studentsModal-#{student.id}"%>" tabindex="-1" aria-labelledby="<%="studentsModalLabel-#{student.id}"%>" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="<%="studentsModalLabel-#{student.id}"%>"><%=student.full_name%></h5>
+                    <div class="modal-header bg-success">
+                      <h5 class="modal-title" id="<%="studentsModalLabel-#{student.id}"%>"></h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                      <% if student.avatar.attached? %>
-                          <%= image_tag student.avatar, class:"card-img-top" %>
-                      <% else %>
-                        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top" alt="">
-                      <% end %>
-                      <h6 class="mt-2"><strong>Email:</strong> <%= student.email %></h6>
+                      <div class="card flex-row border-0">
+                        <% if student.avatar.attached? %>
+                          <%= image_tag student.avatar, class:"card-img-top w-50" %>
+                        <% else %>
+                          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" class="card-img-top w-50" alt="">
+                        <% end %>
+                        <div class="card-body d-flex aling-items-center">
+                          <div class="align-self-center">
+                            <h4 class="card-title"><%=student.full_name%></h4>
+                            <p class="card-text"><h6><strong>Email:</strong> <a href="mailto:<%= student.email %>" target="_blank"><%= student.email %></a></h6></p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

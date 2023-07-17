@@ -15,7 +15,7 @@ class Content < ApplicationRecord
         if self.file.attached?
             result.append("File")
         end
-        if not self.url.nil?
+        if not self.url.blank?
             result.append("Link")
         end
         return result.join(", ")
