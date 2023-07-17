@@ -62,7 +62,7 @@ class UsersController < ApplicationController
     end
 
     def require_same_user_or_admin
-      if @current_user != @user
+      if not (@current_user.role == "Admin" or @current_user == @user )
         flash[:alert] = (session[:lang].nil? or session[:lang] == 'gr')? "Δεν είσαι εξουσιοδοτημένος για αυτό." : "You don't have the authority to do this!"
         redirect_to root_path
       end
