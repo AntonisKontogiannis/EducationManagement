@@ -4,7 +4,7 @@
   <div class="accordion-item">
     <h2 class="accordion-header" id="professorsHeader">
       <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#professorsCollapse" aria-expanded="false" aria-controls="professorsCollapse">
-        <h5><i class="fa-solid fa-graduation-cap"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Διδάσκοντες" : "Professors"%> (<%= @subject.professors.size %>)</h5>
+        <h5><i class="fa-solid fa-chalkboard-user"></i> <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Διδάσκοντες" : "Professors"%> (<%= @subject.professors.size %>)</h5>
       </button>
     </h2>
     <div id="professorsCollapse" class="accordion-collapse collapse show" aria-labelledby="professorsHeader" data-bs-parent="#accordion-professors">

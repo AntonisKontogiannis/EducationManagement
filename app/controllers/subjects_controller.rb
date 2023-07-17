@@ -5,6 +5,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects or /subjects.json
   def index
+    redirect_to control_panel_path if @currrent_user.role == "Administrator"
     @user_attends = @current_user.subject_attends.pluck(:subject_id)
     @subjects = Subject.all
     @subject_attend = SubjectAttend.new
