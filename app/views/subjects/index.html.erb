@@ -40,7 +40,7 @@
                       <tr>
                         <td class="title"><%= subject.title %></td>
                         <% if @current_user.role == "Student" %>
-                          <td class="professor"><%= subject.professors.map {|u| u.full_name}.join %></td>
+                          <td class="professor"><%= subject.professors.map {|u| u.full_name}.join(" ") %></td>
                         <% else %>
                           <td class="students"><%= subject.students_size %></td>
                         <% end %>
