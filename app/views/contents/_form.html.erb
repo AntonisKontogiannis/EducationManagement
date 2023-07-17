@@ -16,34 +16,26 @@
 
             <%= form.hidden_field :subject_id, value: @subject.id %>
 
-            <div class="field">
-              <div class="form-group row mt-3">
-                    <%= form.label :category, class: "col-2 col-form-label text-light", value: (session[:lang].nil? or session[:lang] == 'gr')?  "Κατηγορία" : "Category" %>
-                    <%= form.select :category, ['Image', 'File'], {}, { class:"form-select ml-2", style:"width: 82%;", onchange:"enablePublish();"} %>
-                </div> 
-              </div>
 
             <div class="field" id="urlField">
-              <%= form.label :url, class: "col-2 col-form-label text-light" %>
+              <%= form.label :url, value: (session[:lang].nil? or session[:lang] == 'gr')?  "Σύνδεσμος" : "URL", class: "col-2 col-form-label text-light" %>
               <%= form.url_field :url, class: "form-control shadow rounded", placeholder: (session[:lang].nil? or session[:lang] == 'gr')?  "Σύνδεσμος υλικού" : "Content link" %>
             </div>
 
-            <% if content.category == 'Image'%>
-              <% if content.file.attached? %>
-                <%= image_tag content.file, class:"w-50" %>
-                <h6 class="mt-2 text-light"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επιλεγμένη Εικόνα" : "Choosen image"%>: </strong></h6>
-                <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
-              <% else %>
-                <img src="https://i1.wp.com/www.slntechnologies.com/wp-content/uploads/2017/08/ef3-placeholder-image.jpg" class="w-50" alt="">
-              <% end %>
-            <% elsif content.category == 'File'%>
+            <% if content.image.attached? %>
+              <%= image_tag content.image, class:"w-50" %>
+              <h6 class="mt-2 text-light"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επιλεγμένη Εικόνα" : "Choosen image"%>: </strong></h6>
+              <%= link_to(content.image.filename, rails_blob_path(content.image, disposition: 'attachment'))%>
+            <% end %>
+            <div class="field text-light" id="imageField">
+              <%= form.label :image, class: "col-2 col-form-label text-light", value: (session[:lang].nil? or session[:lang] == 'gr')?  "Εικόνα" : "Image" %>
+              <%= form.file_field :image , onchange: "enablePublish()", accept: 'image/png,image/gif,image/jpeg' %>
+            </div>
+            
               <% if content.file.attached? %>
                 <h6 class="mt-2 text-light"><strong><%=(session[:lang].nil? or session[:lang] == 'gr')?  "Επιλεγμένo αρχείο" : "Choosen file"%>:</strong></h6>
                 <%=link_to(content.file.filename, rails_blob_path(content.file, disposition: 'attachment'))%>
-              <% else %>
-                <%=(session[:lang].nil? or session[:lang] == 'gr')?  "Δεν βρέθηκε αρχείο. Παρακαλώ επεξεργαστείτε το υλικό." : "Nothing found, please edit this content."%>
               <% end %>
-            <% end %>
 
             <div class="field text-light" id="fileField">
               <%= form.label :file, class: "col-2 col-form-label text-light", value: (session[:lang].nil? or session[:lang] == 'gr')?  "Αρχείο" : "File" %>
@@ -83,14 +75,9 @@
   }
 
   function content_check(){
-      var content_category = document.getElementById("content_category").value;
-      if (content_category == "Image"){
-        var file =   document.getElementById("content_file").value;
-        return (file != '' && file != null && (file.includes(".png") || file.includes(".jpg") || file.includes(".jpeg") || file.includes(".webp") || file.includes(".svg")))
-      } else if (content_category == "File") {
-        var file =   document.getElementById("content_file").value;
-        return (file != '' && file != null)
-      }
+      var image =   document.getElementById("content_image").value;
+      var file =   document.getElementById("content_file").value;
+      return (image != '' && image != null && (image.includes(".png") || image.includes(".jpg") || image.includes(".jpeg") || image.includes(".webp") || image.includes(".svg"))) || (file != '' && file != null)
   }  
   enablePublish();
 </script>
