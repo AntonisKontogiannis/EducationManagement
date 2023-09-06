@@ -1,7 +1,7 @@
 class Subject < ApplicationRecord
     belongs_to :semester
-    has_many :contents
-    has_many :subject_attends
+    has_many :contents, dependent: :destroy
+    has_many :subject_attends, dependent: :destroy
     has_many :users, through: :subject_attends
     validates :title, presence: true, length: { minimum: 2, maximum: 100}, uniqueness: true
 

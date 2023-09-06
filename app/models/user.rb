@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-    has_many :subject_attends
+    has_many :subject_attends, dependent: :destroy
     has_many :subjects, through: :subject_attends
     validates :first_name, presence: true,   
                         length: { minimum: 3, maximum: 25}   
